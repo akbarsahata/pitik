@@ -1,0 +1,1 @@
+ALTER TABLE cms.t_coop ADD purchase_request_sapronak_id varchar(32) NULL;

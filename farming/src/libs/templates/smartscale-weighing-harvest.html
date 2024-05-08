@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Tangkap Ayam</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin-top: 0px;
+      padding-top: 0px;
+      margin-left: 10px;
+      max-width: 1024px;
+      max-width: 21cm !important; 
+      padding-left: 3cm;
+      padding-right: 3cm;
+      padding-bottom: 3cm;
+      padding-top: 1cm;
+      font-size: 12px;
+    }
+
+    .header img {
+      float: left;
+      height: 100px;
+      margin-right: 45px;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      position: relative;
+      top: 18px;
+      left: 10px;
+    }
+    
+    .table1, th, td {
+      border-collapse: collapse;
+      padding: 0.5rem;
+    }
+
+    .table2 {
+      border: none !important;
+      border-collapse: collapse !important;
+    }
+
+    .th2, .td2{
+      border: none !important;
+      width: 50% !important;
+      text-align: center !important;
+      padding-right: 2cm !important;
+    }
+    
+    div.table-timbang > table.data-table-timbang  {
+			border: 1px solid black !important;
+			border-collapse:collapse;
+			padding: 10px;
+		}
+
+		div.table-timbang > table.data-table-timbang > th  {
+			border: 1px solid black !important;
+			padding: 10px;
+			background: #f0f0f0;
+			color: #313030;
+		}
+  
+    div.table-timbang > table.data-table-timbang > thead > tr > th {
+			border: 1px solid black !important;
+			text-align:center;
+			padding: 10px;
+			background: #f4f4f4;
+			color: #313030;
+		}
+
+    div.table-timbang > table.data-table-timbang > tbody > tr > td {
+			border: 1px solid black !important;
+			text-align:center;
+			padding: 10px;
+			background: #ffffff;
+			color: #313030;
+		}
+
+    div.table-timbang > table {
+      margin: 10px;
+    }
+
+    div.div-breaker {
+      margin: 400px;
+    }
+</style>
+</head>
+<body>
+  <div class="header" style="padding: 22px">
+    <img src="http://cms.pitik.id/assets/images/logo.png" alt="logo" />
+    <h1>PT PITIK DIGITAL INDONESIA</h1>
+  </div>
+  <div style="display: inline-flex;">
+    <table class="table1">
+      <tbody>
+        <tr>
+          <td>NAMA KANDANG</td>
+          <td>:</td>
+          <td>{{ coopName }}</td>
+          <td>TANGGAL</td>
+          <td>:</td>
+          <td>{{ createdDate }}</td>
+        </tr>
+        <tr>
+          <td>ALAMAT KANDANG</td>
+          <td>:</td>
+          <td>{{ addressName }}</td>
+          <td>NOMOR TIMBANG</td>
+          <td>:</td>
+          <td>{{ weighingNumber }}</td>
+        </tr>
+        <tr>
+          <td>BAKUL / NAMA CUSTOMER</td>
+          <td>:</td>
+          <td>{{ bakulName }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>NOMOR MOBIL</td>
+          <td>:</td>
+          <td>{{ truckLicensePlate }}</td>
+          <td></td>
+          <td>MENGETAHUI</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>NAMA SOPIR</td>
+          <td>:</td>
+          <td>{{ driver }}</td>
+          <td>DIKETAHUI OLEH</td>
+          <td>:</td>
+          <td>{{ witnessName }}</td>
+        </tr>
+        <tr>
+          <td>TANGGAL TANGKAP</td>
+          <td>:</td>
+          <td>{{ harvestDate }}</td>
+          <td>DITERIMA OLEH</td>
+          <td>:</td>
+          <td>{{ receiverName }}</td>
+        </tr>
+        <tr>
+          <td>JAM TANGKAP</td>
+          <td>:</td>
+          <td>{{ weighingTime }}</td>
+          <td>DITIMBANG OLEH</td>
+          <td>:</td>
+          <td>{{ weigherName }}</td>
+        </tr>
+        <tr>
+          <td>JAM BERANGKAT</td>
+          <td>:</td>
+          <td>{{ truckDepartingTime }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>PENIMBANG</td>
+          <td>:</td>
+          <td>{{ weigherName }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>TOTAL EKOR</td>
+          <td>:</td>
+          <td>{{ totalWeighedChicken }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>TOTAL Kg</td>
+          <td>:</td>
+          <td>{{ totalWeighedTonnage }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>BERAT RATA-RATA (KG)</td>
+          <td>:</td>
+          <td>{{ averageChickenWeighed }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <tbody>
+    </table>
+  </div>
+    <hr />
+  </div>
+  <div class="div-breaker"></div>
+  <div class="div-breaker"></div>
+  <div>
+    <br /><br />
+    <h3>DATA TIMBANG</h3>
+  </div>
+  <div class="table-timbang" style="display: flex;">
+    {{#records}}
+      <table class="data-table-timbang">
+        <thead>
+          <tr>
+            <th>Ekor</th>
+            <th>Kg</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#details}}
+          <tr>
+            <td>{{totalCount}}</td>
+            <td>{{totalWeight}}</td>
+          </tr>
+          {{/details}}
+          <tr>
+            <td>{{quantity}}</td>
+            <td>{{tonnage}}</td>
+          </tr>
+        </tbody>
+      </table>
+    {{/records}}
+  </div>
+</body>
+</html>

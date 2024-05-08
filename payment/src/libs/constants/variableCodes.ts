@@ -1,0 +1,10 @@
+export const VAR_ABW_CODE = 'Average Weight Birds';
+export const VAR_FEED_CON_CODE = 'Feed Consumption';
+export const VAR_TOMO_CODE = 'TOMO';
+export const VAR_TRG_ACC_MORT_CODE = 'Target Accumulative Mortality';
+export const VAR_TEMP_CODE = 'TEMPERATURE';
+export const VAR_RH_CODE = 'RH';
+export const VAR_NH3_CODE = 'NH3';
+export const VAR_HSI_CODE = 'HSI';
+export const VAR_HSI_TARGET_CODE = 'Target HSI';
+export const VAR_FCR_TARGET_CODE = 'Target FCR';

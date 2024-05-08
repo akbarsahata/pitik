@@ -1,0 +1,92 @@
+syntax = "proto3";
+package commoniot;
+
+// get device information
+// send once after power up or reset
+message InfoDevice {
+    bytes  uid = 1; // device unique id, first byte is the device type
+    uint32 firmware = 2; // firmware version, converted to 2 byte
+    uint32 hardware = 3; // hardware version, converted to 2 byte
+    // firmware version
+    // +-------------------------------------------------+
+    // |    15    | 14 - 13  | 12 .. 9 | 8 .. 5 | 4 .. 0 |
+    // +----------+----------+---------+--------+--------+
+    // | reserved | variant  |  major  |  minor | patch  |
+    // +-------------------------------------------------+
+    // varian:
+    // +----------------------------------------------+
+    // | number | string | tipe       | contoh string |
+    // +--------+--------+------------+---------------+
+    // |    0   |        | production | v1.1.5        |
+    // +--------+--------+------------+---------------+
+    // |    1   |  rnd   | rnd        | v1.1.5-rnd    |
+    // +--------+--------+------------+---------------+
+    // |    2   |  test  | testing    | v1.1.5-test   |
+    // +--------+--------+------------+---------------+
+
+    // hardware version
+    // +---------------------------------------+
+    // |    15    | 14 .. 10 | 9 .. 5 | 4 .. 0 |
+    // +----------+----------+--------+--------+
+    // | reserved |   major  |  minor | patch  |
+    // +---------------------------------------+
+}
+
+// set/get farm information
+// send once after power up or reset
+message InfoFarm {
+    // sesuai usul rusdi, owner, area, building, cycle, dan coop dihapus
+    // kalau ke depan dibutuhkan lagi, bisa gunakan nomor urut yang sama
+    uint32 room = 4;     // must be unique
+    uint32 status = 7;   // farm status 0:inactive, 1:active
+}
+
+// set start the farming cycle, change farm status to 1:active
+message StartCycle {
+    uint32 at = 1;       // specific time to start, 0 for now
+}
+
+// set stop the farming cycle, change farm status to 0:inactive
+message StopCycle {
+}
+
+// set restart the device
+message Reset {
+}
+
+// set check if device is OK
+message Ping {
+    uint32 tscmd = 1;    // timestamp of server
+    uint32 tsreply = 2;  // timestamp of device
+}
+
+// set over the air update
+message Ota {
+    uint32 version = 1;  // firmware version
+    uint32 filesize = 2; // in bytes
+    uint32 devtype = 3;  // device type, same as source info for device
+    uint32 status = 4;   // status 1 = ota success; 0 = ota failed
+    repeated uint32 users = 5; // list of user id
+}
+
+// set/get mapping device to room
+message MapDevice {
+    uint32 room = 1;     // room unique id
+    uint32 command = 2;  // 0: get, 1: add mapping, 2: remove mapping
+}
+
+// set/get report setting
+message ReportSetting {
+    uint32 at = 1;       // start reporting at
+    uint32 period = 2;   // report period, default to 10 minutes
+}
+
+message Signal {
+    repeated bytes leveltime = 1; // 1st byte level 0/1, 4 bytes timestamp
+}
+
+// general error message
+message Error {
+    uint32 num = 1; // error number
+    string msg = 2; // error description
+}

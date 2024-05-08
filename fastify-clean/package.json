@@ -1,0 +1,103 @@
+{
+  "name": "farming",
+  "version": "2.33.3",
+  "description": "",
+  "main": "src/index.ts",
+  "engines": {
+    "node": "18.12.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:routes": "jest ./api --verbose --forceExit",
+    "prepare": "husky install",
+    "dev": "NODE_ENV=development ts-node-dev --rs -r dotenv/config src/index.ts",
+    "debug": "NODE_ENV=development ts-node-dev --rs --inspect -r dotenv/config src/index.ts",
+    "start": "pm2 start",
+    "build": "tsc",
+    "production": "tsc && pm2 start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/pitik.id/backend/farming.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/pitik.id/backend/farming/issues"
+  },
+  "homepage": "https://gitlab.com/pitik.id/backend/farming#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/mustache": "4.2.2",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.1",
+    "eslint-plugin-jest": "^25.3.4",
+    "husky": "^7.0.4",
+    "jest": "^26.6.3",
+    "jest-environment-node": "^26.6.2",
+    "jest-ts-webcompat-resolver": "^1.0.0",
+    "lint-staged": "^11.2.3",
+    "prettier": "^2.5.1",
+    "prettier-plugin-organize-imports": "^3.2.1",
+    "ts-jest": "^26.5.6",
+    "ts-node-dev": "^2.0.0"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.231.0",
+    "@aws-sdk/s3-request-presigner": "^3.231.0",
+    "@elastic/elasticsearch": "^7.15.0",
+    "@fastify/cors": "^8.2.0",
+    "@fastify/helmet": "^10.1.0",
+    "@fastify/request-context": "^4.2.0",
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.3.0",
+    "@fastify/type-provider-typebox": "^2.4.0",
+    "@sentry/node": "^6.13.3",
+    "@sentry/tracing": "^6.13.3",
+    "@sinclair/typebox": "^0.25.23",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/figlet": "^1.5.4",
+    "@types/ioredis": "^4.28.5",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/node": "^16.11.1",
+    "@types/node-fetch": "^2.5.12",
+    "abortcontroller-polyfill": "^1.7.5",
+    "bcryptjs": "^2.4.3",
+    "bullmq": "^3.2.0",
+    "cockatiel": "^3.0.0",
+    "date-fns": "^2.26.0",
+    "date-fns-tz": "^1.1.7",
+    "dotenv": "^10.0.0",
+    "envalid": "^7.2.1",
+    "fastify": "^4.13.0",
+    "fastify-decorators": "^3.15.0",
+    "fastify-error": "^0.3.1",
+    "fastify-multer": "^2.0.3",
+    "figlet": "^1.5.2",
+    "hot-shots": "^10.0.0",
+    "ioredis": "^5.2.4",
+    "jsonwebtoken": "^9.0.0",
+    "mqtt": "^4.3.7",
+    "mustache": "4.2.0",
+    "node-fetch": "^2.6.7",
+    "pg": "^8.7.3",
+    "pino": "^8.7.0",
+    "pino-pretty": "^9.1.1",
+    "protobufjs-cli": "^1.1.0",
+    "puppeteer": "19.4.1",
+    "reflect-metadata": "^0.1.13",
+    "string-strip-html": "^8.3.0",
+    "typeorm": "^0.3.10",
+    "typescript": "^4.4.4"
+  }
+}

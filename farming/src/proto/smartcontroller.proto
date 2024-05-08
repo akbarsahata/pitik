@@ -1,0 +1,150 @@
+syntax = "proto3";
+package smartcontroller;
+
+import "commoniot.proto";
+
+/*** CONTROLLER ***/
+
+// Untuk melihat kode message code, lihat README.md
+message ControllerContent {
+  bytes meta = 1;
+
+  // from common
+  InfoDevice infoDevice = 2;
+  InfoFarm infoFarm = 3;
+  StartCycle startCycle = 4;
+  StopCycle stopCycle = 5;
+  Reset reset = 6;
+  Ping ping = 7;
+  Ota ota = 8;
+  MapDevice mapDevice = 10;
+  ReportSetting reportSetting = 11;
+
+  // specific to controller
+  ControllerData controllerData = 12;
+  ControllerStatus controllerStatus = 13;
+  ControllerSetting controllerSetting = 14;
+  ControllerLocalComm controllerLocalComm = 15;
+
+  // only for get data
+  Error error = 50; // error code and message if any
+}
+
+// get data, periodic report
+message ControllerData {
+    repeated Signal fan = 1; // 8 fan
+    Signal heater = 2;
+    Signal cooler = 3;
+    Signal lamp = 4;
+    Signal alarm = 5;
+    repeated Signal intermit = 6; // 8 fan
+    repeated uint32 temp = 7;  // temperature Sensor 1 in 0.1 C
+    repeated uint32 humi = 8;  // humidity Sensor 1 in 0.1 %
+    int32 rssi = 9;  // WiFi received signal strength, in -1 dBm
+    uint32 extTemp = 10;
+    uint32 extHumi = 11;
+}
+
+// get status and alert
+// 0 means no error
+message ControllerStatus {
+  uint32 rtc = 1;   // real time clock, 1: begin
+  uint32 relay = 2; // relay
+  uint32 modbus = 3; // modbus sensor, 1: s1 timeout, 2: s2 timeout, 3: undetected
+  uint32 sdcard = 4;                   // sdcard, 1: begin, 2: corrupt, 3: read
+  uint32 eeprom = 5;                   // eeprom, 1: begin, 2: read, 3: write
+  uint32 stm32 = 6;                    // stm32 serial, 1: timeout
+  uint32 hot = 7;                      // hot temperature, 1: above setting
+  uint32 cold = 8;                     // cold temperature, 1: below setting
+  uint32 undervolt = 9;                // under voltage, 1: below setting
+  repeated ErrorSht20 errorSht20 = 10; // error sensor SHT20
+  Button button = 11;                  // button for off alarm
+
+  // only for alert
+  uint32 priority = 30; // 1: low, 2: medium, 3: high
+}
+// set/get settings, change
+// send once after power up or reset
+message ControllerSetting {
+  uint32 tOffSet = 1;
+  uint32 heater = 2;
+  uint32 growth = 3;
+  uint32 reset = 4;
+  uint32 tempDayOne = 5;
+  uint32 reqTemp = 6;
+  Cooler cooler = 7;
+  Alarm alarm = 8;
+  repeated ReductionOpt reduction = 9; // temperature reduction, 9 group
+  repeated FanOpt fan = 10;
+  repeated LightOpt light = 11; // time on off light, 5 light
+  uint32 sensor = 12;           // Number of Sensor
+  RotationMode rotMode = 13;
+}
+
+message Alarm {
+  uint32 cold = 1; // cold alarm (by temp)
+  uint32 hot = 2;  // hot alarm (by temp)
+}
+message Cooler {
+  uint32 tempCool = 1; // cooling pad temperature
+  Time TimeCool = 2;   // time on off cooler
+}
+
+message LightOpt {
+  uint32 id = 1;
+  Time time = 2;
+}
+
+message ReductionOpt {
+  uint32 id = 1;       // Number of Grup
+  TempDay tempDay = 2; // Reductemp Setting
+}
+message FanOpt {
+  uint32 id = 1;   // Number of Fan
+  uint32 mode = 2; // Bool for inttermitten Mode  0: off, 1: on
+  uint32 diff = 3; // Diff Temp Fan
+  Time time = 4;   // Time for Inttermitten
+  uint32 intKipas = 5;
+}
+
+message Time {
+  uint32 on = 1;  // time ON, in seconds, up to 1 hour - 1 second , Lamp In
+                  // Minute up to 24 hours
+  uint32 off = 2; // time OFF, in seconds, up to 1 hour - 1 second , Lamp in
+                  // Minute upto 24 hours
+}
+
+message TempDay {
+  uint32 temp = 1; // temperature
+  uint32 days = 2; // total days
+}
+
+message RotationMode {
+  uint32 mode = 1; // Enable or Disable Rotation Mode
+  Time time = 2;   // Durasi Intermitten With rotation Mode
+  uint32 loop = 3; // Loop Fan On in rotateMode
+}
+
+message ErrorSht20 {
+  uint32 id = 1; // 1 = sensor1 sht20; 2 = sensor2 sht20
+  uint32 exception = 2; // EXC_NONE = 0, EXC_ILLEGAL_FUNC = 1, EXC_ILLEGAL_ADDR =
+         // 2,EXC_ILLEGAL_VAL =3,EXC_ILLEGAL_SERVER_FAIL = 4,EXC_ACK = 5,
+         // EXC_DEVICE_BUSY = 6, EXC_MEMORY_PARITY_ERR =
+         // 7,EXC_GATEWAY_PATH_UNAVAILABLE = 8, EXC_GATEWAY_DEV_UNRESPONSIVE =
+         // 9, EXC_CORRUPT_RESP = 10, EXC_TIMEOUT = 11,
+         // EXC_INSUFFICIENT_COM_BUFFER = 12, EXC_UART_ERROR = 13
+  uint32 command = 3; // 0x01 = Alerts is ON; 0x00 = Alerts is OFF
+}
+
+message Button {
+  uint32 id = 1;      // button 0- 9 menu =10; next =11; enter 12;
+  uint32 command = 2; // optional jika mau dipake
+}
+
+// Ref:
+// https://pitik.atlassian.net/wiki/spaces/IOT/pages/275054773/Penambahan+Field+Protobuf+Parser+untuk+External+Sensor+dan+Pemisahan+Message+Type+untuk+Reply+Config+Smart+Controller
+message ControllerLocalComm {
+  optional string mac = 1;
+  repeated uint32 atc = 2;
+  optional uint32 status = 3;
+}

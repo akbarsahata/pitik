@@ -1,0 +1,7 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "workbench.editor.labelFormat": "short",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
+}

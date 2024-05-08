@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package smartcamera;
+
+enum DeviceImageState {
+    DONE = 0;
+    ERROR_CAPTURE_IMAGE = 1;
+    ERROR_UPLOAD_IMAGE = 2;
+    CRC_FAILED = 4;
+}
+
+message Cam {
+    bytes meta = 1;
+    string job_id = 2;
+    string sensor_code = 3;
+    DeviceImageState state = 4;
+    SetCam setCam = 5;
+}
+
+enum DeviceErrorState {
+    OTA_SUCCEED = 0;
+    SET_CAM_SUCCEED = 1;
+    OTA_FAILED = 2;
+    SET_CAM_FAILED = 3;
+    OTA_HASH_FAILED = 4;
+    PROTO_CRC_FAILED = 5;
+    PRESIGNED_URL_FAILED = 6;
+}
+
+message SetParam {
+    string sensor_code = 1;
+    string ip_cam = 2;
+}
+
+message SetOta {
+    string file_name = 2;
+    string file_hash = 3;
+    string file_link = 4;
+}
+
+message SetError {
+    string mac_address = 2;
+    DeviceErrorState state = 4;
+}
+
+message SetCam {
+    SetParam setParam = 1;
+    SetOta setOta = 2;
+    SetError setError = 3;
+}

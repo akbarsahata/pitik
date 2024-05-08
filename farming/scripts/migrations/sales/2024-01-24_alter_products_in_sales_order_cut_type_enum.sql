@@ -1,0 +1,1 @@
+ALTER TYPE sales."products_in_sales_order_cut_type_enum" ADD VALUE 'UTUH';

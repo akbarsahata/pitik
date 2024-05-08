@@ -1,0 +1,57 @@
+syntax = "proto3";
+package smartmonitor;
+
+import "proto/commoniot.proto";
+import "proto/smartmonitorsensor.proto";
+
+/*** MONITOR ***/
+
+// Untuk melihat kode message code, lihat README.md
+message MonitorContent {
+    bytes         meta = 1;
+
+    // from common
+    InfoDevice    infoDevice = 2;
+    InfoFarm      infoFarm = 3;
+    StartCycle    startCycle = 4;
+    StopCycle     stopCycle = 5;
+    Reset         reset = 6;
+    Ping          ping = 7;
+    Ota           ota = 8;
+    MapSensor     mapSensor = 9;
+    MapDevice     mapDevice = 10;
+    ReportSetting reportSetting = 11;
+
+    // specific to monitor
+    MonitorData         monitorData = 12;
+    MonitorStatus       monitorStatus = 13;
+    storeR0             storeR0       = 14;
+    DiagnosticsData     diagnosticsData =15;
+
+    // only for get data
+    Error  error = 50;   // error code and message if any
+}
+
+// get data and periodic report
+message MonitorData {
+    Sensor local = 1; // sensors connected locally from the same room
+    Sensor remote = 2; // sensors connected from other room
+    uint32 rssi = 3;  // WiFi received signal strength, in -1 dBm
+}
+
+// get sensor status
+message MonitorStatus {
+    uint32 status = 1;   // 2 bytes device status
+}
+
+message storeR0 {
+    uint32 r0Value = 1;   // 2 bytes device status
+}
+
+// diagnostics data
+message DiagnosticsData {
+    uint64 unixTimeData = 1;
+    float pingResponseTime = 2;
+    int32 wifiRSSI = 3;
+    uint32 minFreeHeapSinceBoot = 4;
+}

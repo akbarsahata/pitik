@@ -1,0 +1,34 @@
+import { Inject, Service } from 'fastify-decorators';
+import { ProducerRecord } from 'kafkajs';
+import { KafkaConnection } from '../../../datasources/connection/kafka.connection';
+import { WhalePaymentIn } from '../../../libs/constants/kafkaTopic';
+import { PaymentStatusMessage } from '../../../libs/interfaces/kafka-message';
+import { Logger } from '../../../libs/utils/logger';
+
+@Service()
+export class PaymentStatusProducer {
+  @Inject(KafkaConnection)
+  private kafka!: KafkaConnection;
+
+  @Inject(Logger)
+  private logger!: Logger;
+
+  async send(body: PaymentStatusMessage) {
+    const message = JSON.stringify(body);
+
+    const record: ProducerRecord = {
+      topic: WhalePaymentIn,
+      messages: [
+        {
+          key: body.paymentId,
+          value: message,
+          timestamp: `${new Date().getTime()}`,
+        },
+      ],
+      acks: -1, // message should be written to all in-sync replicas
+    };
+
+    await this.kafka.paymentInProducer.send(record);
+    this.logger.info(message, `[KAFKA] ${WhalePaymentIn} - ${body.paymentId}`);
+  }
+}
