@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  sonarqube:
+    image: sonarqube:lts-community
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DB}
+      SONAR_JDBC_USERNAME: ${PG_USER}
+      SONAR_JDBC_PASSWORD: ${PG_PASS}
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    ports:
+      - "80:9000"
+
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:

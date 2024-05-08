@@ -1,0 +1,1 @@
+export const QUEUE_AUDIT_TRAIL = 'AUDIT_TRAIL';

@@ -1,0 +1,90 @@
+{
+  "name": "user-management",
+  "version": "2.7.3",
+  "description": "user-management service with pitik fastify boilerplate",
+  "main": "src/index.ts",
+  "engines": {
+    "node": "18.3.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "prepare": "husky install",
+    "dev": "nodemon -r dotenv/config src/index.ts",
+    "debug": "nodemon --inspect -r dotenv/config src/index.ts",
+    "start": "pm2 start",
+    "build": "tsc",
+    "production": "tsc && pm2 start && pm2 save"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pitik-Digital-Indonesia/user-management.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pitik-Digital-Indonesia/user-management/issues"
+  },
+  "homepage": "https://github.com/Pitik-Digital-Indonesia/user-management#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/pg": "^8.6.6",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^25.3.4",
+    "husky": "^7.0.4",
+    "jest": "^26.6.3",
+    "jest-environment-node": "^26.6.2",
+    "jest-ts-webcompat-resolver": "^1.0.0",
+    "lint-staged": "^11.2.3",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.5.1",
+    "ts-jest": "^26.5.6",
+    "ts-node": "^10.3.0"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.15.0",
+    "@fastify/cors": "^8.2.0",
+    "@fastify/helmet": "^10.1.0",
+    "@fastify/request-context": "^4.2.0",
+    "@sentry/node": "^6.13.3",
+    "@sentry/tracing": "^6.13.3",
+    "@sinclair/typebox": "^0.25.23",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/figlet": "^1.5.4",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/node": "^16.11.1",
+    "@types/node-fetch": "^2.5.12",
+    "bcryptjs": "^2.4.3",
+    "bullmq": "^3.6.6",
+    "date-fns": "^2.26.0",
+    "date-fns-tz": "^1.1.7",
+    "dotenv": "^10.0.0",
+    "envalid": "^7.2.1",
+    "fastify": "^4.13.0",
+    "fastify-decorators": "^3.15.0",
+    "fastify-error": "^0.3.1",
+    "fastify-multer": "^2.0.3",
+    "figlet": "^1.5.2",
+    "ioredis": "^5.3.2",
+    "jsonwebtoken": "^9.0.0",
+    "jwks-rsa": "^3.1.0",
+    "node-fetch": "2.6.7",
+    "pg": "^8.8.0",
+    "pino": "^8.7.0",
+    "pino-pretty": "^9.1.1",
+    "reflect-metadata": "^0.1.13",
+    "string-strip-html": "^8.3.0",
+    "typeorm": "^0.3.14",
+    "typescript": "^4.4.4"
+  }
+}

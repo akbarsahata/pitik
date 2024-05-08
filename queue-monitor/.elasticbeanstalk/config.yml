@@ -1,0 +1,21 @@
+branch-defaults:
+  development:
+    environment: s-queue-monitor
+  master:
+    environment: p-queue-monitor
+environment-defaults:
+  p-queue-monitor:
+    branch: null
+    repository: null
+global:
+  application_name: Queue Monitor
+  default_ec2_keyname: null
+  default_platform: Node.js 14 running on 64bit Amazon Linux 2
+  default_region: ap-southeast-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  sc: git
+  workspace_type: Application

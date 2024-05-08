@@ -1,0 +1,27 @@
+{
+  "name": "postman-collections",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./scripts/postman-to-openapi.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/pitik.id/backend/postman-collections.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/pitik.id/backend/postman-collections/issues"
+  },
+  "homepage": "https://gitlab.com/pitik.id/backend/postman-collections#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "postman2openapi": "^1.0.0",
+    "swagger-ui-express": "^4.5.0"
+  }
+}
